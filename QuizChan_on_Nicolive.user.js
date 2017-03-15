@@ -193,11 +193,11 @@ function init() {
 	
 }
 
-/*
+
 if (!isNazoNamaLive()) {
 	return;
 }
-*/
+
 
 init();
 encode();
