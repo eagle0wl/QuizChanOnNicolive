@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        QuizChan on Nicolive
-// @namespace   http://www.mysys.org/eagle0wl/
+// @namespace   https://github.com/eagle0wl/QuizChanOnNicolive
 // @description ニコ生にクイズちゃん回答用フォームを追加します。
 // @include     http://live.nicovideo.jp/watch/*
 // @require     https://rawgit.com/polygonplanet/encoding.js/master/encoding.min.js
