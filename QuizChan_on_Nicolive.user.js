@@ -6,12 +6,16 @@
 // @require     https://rawgit.com/polygonplanet/encoding.js/master/encoding.min.js
 // @author      eagle0wl
 // @license     MIT
-// @version     0.01a
+// @version     0.02a
 // @grant       none
 // ==/UserScript==
 
-var STR_VERSION = "QuizChan on Nicolive ver0.01a by eagle0wl";
-var STR_HELP = "名前を入れます。エンコードしたいメッセージの入力後、Enterを１回押すとクリップボードにエンコード済み文字列がコピーされます。さらにTABを１回押すとニコ生のコメント入力欄にフォーカスが移動するので、ペーストして投稿してください。投稿後、TABキーでコメント入力欄に戻れずマウス操作が必要ですが技術上の仕様です。";
+// false を true にすると他の生放送でもフォームが表示される
+// ただし http://live2.nicovideo.jp/ から始まるURLでは非表示のまま
+var ALWAYS_DISPLAY = false;
+
+var STR_VERSION = "QuizChan on Nicolive ver0.02a by eagle0wl";
+var STR_HELP = "名前を入れます。一旦マウスから生放送プレイヤーのコメント欄にフォーカスを合わせます。エンコードしたいメッセージをクリックして文字列入力後、Enterを１回押すとクリップボードにエンコード済み文字列がコピーされます。（環境によっては）さらにTABを１回押すとニコ生のコメント入力欄にフォーカスが移動するので、ペーストして投稿してください。投稿後、TABキーでコメント入力欄に戻れずマウス操作が必要ですが技術上の仕様です。";
 
 
 function isNazoNamaLive() {
@@ -44,8 +48,6 @@ function isNazoNamaLive() {
 
 function encode() {
 	
-	console.log("encode");
-	
 	var username = document.getElementById("quizchan_username").value;
 	var message = document.getElementById("quizchan_message").value;
 	username = username.replace(/^\s*|\s*$/g, "");
@@ -74,8 +76,6 @@ function encode() {
 
 
 function focus() {
-	
-	console.log("focus");
 	
 	var encodedmessage = document.getElementById("quizchan_encodedmessage");
 	encodedmessage.select();
@@ -129,7 +129,6 @@ function init() {
 		encode();
 	};
 	quizchanMessageText.onkeypress = function (e) {
-		console.log("message onkeypress");
 		if (false == encode()) {
 			return true;
 		}
@@ -153,14 +152,12 @@ function init() {
 	quizchanEncodedMessageText.style.backgroundColor = "#cccccc";
 	quizchanEncodedMessageText.readOnly = true;
 	quizchanEncodedMessageText.onkeypress = function (e) {
-		console.log("enc message onkeypress");
 		if(e.keyCode == 13) {
 			focus();
 			//return false;
 		}
 	};
 	quizchanEncodedMessageText.onclick = function (e) {
-		console.log("enc message onclick");
 		this.focus();
 		this.select();
 	};
@@ -194,10 +191,9 @@ function init() {
 }
 
 
-if (!isNazoNamaLive()) {
+if (!ALWAYS_DISPLAY && !isNazoNamaLive()) {
 	return;
 }
-
 
 init();
 encode();
